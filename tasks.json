@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "description": "Buy groceries",
+    "status": "todo",
+    "createdAt": "2026-02-07T22:36:17.395726",
+    "updatedAt": "2026-02-07T22:36:17.395736"
+  },
+  {
+    "id": 2,
+    "description": "Need to Study man",
+    "status": "todo",
+    "createdAt": "2026-02-07T22:36:43.906382",
+    "updatedAt": "2026-02-07T22:36:43.906393"
+  },
+  {
+    "id": 3,
+    "description": "oh yeah man",
+    "status": "todo",
+    "createdAt": "2026-02-07T22:39:35.067008",
+    "updatedAt": "2026-02-07T22:39:35.067018"
+  }
+]
