@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 
-
 public class Main {
     private static final String FILE_PATH = "tasks.json";
     private static final Gson gson = new GsonBuilder()
@@ -24,7 +23,7 @@ public class Main {
 
         while (true) {
             System.out.print("Please Enter the Command: ");
-            System.out.println(" add , list ");
+            System.out.println(" add , list ,  delete ");
             System.out.print(":> ");
             String command = scanner.nextLine();
 
@@ -50,20 +49,98 @@ public class Main {
                     System.out.println("Task added successfully (ID: " + newId + ")");
                     break;
 
+
                 case "list":
-                    List<Task> allTasks = loadTasksFromFile();
-                    if (allTasks.isEmpty()) {
-                        System.out.println("No tasks found.");
-                    } else {
-                        for (Task task : allTasks) {
-                            System.out.println(task);
+                List<Task> allTasks = loadTasksFromFile();
+                if (allTasks.isEmpty()) {
+                System.out.println("No tasks found.");
+                } else {
+                for (Task task : allTasks) {
+                System.out.println(task);
+                }
+                }
+                break;
+                
+                case "delete":
+                try {
+                    System.out.println("Please enter the ID of the task you want to delete: ");
+                    int id = Integer.parseInt(scanner.nextLine());
+                    
+                    // Load existing tasks
+                    List<Task> tasksToDelete = loadTasksFromFile();
+                    
+                    // Find and remove the task with the given ID
+                    boolean removed = false;
+                    for (int i = 0; i < tasksToDelete.size(); i++) {
+                        if (tasksToDelete.get(i).getId() == id) {
+                            tasksToDelete.remove(i);
+                            removed = true;
+                            break;
                         }
+                    }
+                    
+                    if (removed) {
+                        // Save updated list
+                        saveTasksToFile(tasksToDelete);
+                        System.out.println("Task " + id + " deleted successfully.");
+                    } else {
+                        System.out.println("Task with ID " + id + " not found.");
+                    }
+                    
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Task ID must be a number.");
+                }
+                break;
+
+                case "update":
+                    System.out.println("Write the Id of todo :> ");
+                    int idtoUpdate = Integer.parseInt(scanner.nextLine());
+
+                    List<Task> tasksToUpdate = loadTasksFromFile();
+                    boolean updated = false;
+                    for (int i = 0; i < tasksToUpdate.size(); i++) {
+                        if (tasksToUpdate.get(i).getId() == idtoUpdate) {
+                            System.out.println("Write the Description of the task :> ");
+                            String desforUpdate = scanner.nextLine();
+                            tasksToUpdate.get(i).setDescription(desforUpdate);
+                            updated = true;
+                            break;
+                        }
+                    }
+                    if (updated) {
+                        saveTasksToFile(tasksToUpdate);
+                        System.out.println("Task " + idtoUpdate + " updated successfully.");
+                    }else {
+                        System.out.println("Task with ID " + idtoUpdate + " not found.");
                     }
                     break;
 
-                default:
-                    System.out.println("Unknown command: " + command);
-            }
+                case "mark":
+                    System.out.println("Please enter the ID of the task you want to mark :> ");
+                    int idofMark = Integer.parseInt(scanner.nextLine());
+                    List<Task> tasksToMark = loadTasksFromFile();
+                    boolean marked = false;
+                    for (int i = 0; i < tasksToMark.size(); i++) {
+                        if (tasksToMark.get(i).getId() == idofMark) {
+                            System.out.println("Change the Status of the task :> ");
+                            String desforMark = scanner.nextLine();
+                            tasksToMark.get(i).setStatus(desforMark);
+                            marked = true;
+                            break;
+                        }
+                    }
+                    if (marked) {
+                        saveTasksToFile(tasksToMark);
+                        System.out.println("Task " + idofMark + " marked successfully.");
+                    }else {
+                        System.out.println("Task with ID " + idofMark + " not found.");
+                    }
+                    break;
+
+                
+            default:
+                System.out.println("Unknown command: " + command);
+        }
 
             System.out.print("Would you like to continue? [y/n]");
             String answer = scanner.nextLine();

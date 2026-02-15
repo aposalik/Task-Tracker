@@ -1,17 +1,10 @@
 [
   {
     "id": 1,
-    "description": "Buy groceries",
-    "status": "todo",
+    "description": "Alllaaah",
+    "status": "Done",
     "createdAt": "2026-02-07T22:36:17.395726",
-    "updatedAt": "2026-02-07T22:36:17.395736"
-  },
-  {
-    "id": 2,
-    "description": "Need to Study man",
-    "status": "todo",
-    "createdAt": "2026-02-07T22:36:43.906382",
-    "updatedAt": "2026-02-07T22:36:43.906393"
+    "updatedAt": "2026-02-15T17:28:19.934202"
   },
   {
     "id": 3,
