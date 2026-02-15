@@ -2,7 +2,9 @@
 
 A simple command-line task management application built with Java and Maven.
 
-Project URL: https://roadmap.sh/projects/task-tracker
+**Project URL:** https://roadmap.sh/projects/task-tracker
+
+**GitHub Repository:** https://github.com/aposalik/Task-Tracker
 
 ## Features
 
