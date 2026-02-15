@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.time.LocalDateTime;
+import java.util.Scanner;
+
 
 
 public class Main {
@@ -18,50 +20,58 @@ public class Main {
             .create();
 
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Usage: task-cli <command> [arguments]");
-            return;
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("Please Enter the Command: ");
+            System.out.println(" add , list ");
+            System.out.print(":> ");
+            String command = scanner.nextLine();
+
+            switch (command) {
+                case "add":
+//
+                    System.out.println("Add Description :> ");
+                    String description = scanner.nextLine();
+
+                    // Load existing tasks
+                    List<Task> tasks = loadTasksFromFile();
+
+                    // Generate new ID
+                    int newId = generateId(tasks);
+
+                    // Create and add new task
+                    Task newTask = new Task(newId, description);
+                    tasks.add(newTask);
+
+                    // Save back to JSON
+                    saveTasksToFile(tasks);
+
+                    System.out.println("Task added successfully (ID: " + newId + ")");
+                    break;
+
+                case "list":
+                    List<Task> allTasks = loadTasksFromFile();
+                    if (allTasks.isEmpty()) {
+                        System.out.println("No tasks found.");
+                    } else {
+                        for (Task task : allTasks) {
+                            System.out.println(task);
+                        }
+                    }
+                    break;
+
+                default:
+                    System.out.println("Unknown command: " + command);
+            }
+
+            System.out.print("Would you like to continue? [y/n]");
+            String answer = scanner.nextLine();
+            if (answer.toLowerCase().equals("n")) {
+                break;
+            }
         }
 
-        String command = args[0];
-        switch (command) {
-            case "add":
-                if (args.length < 2) {
-                    System.out.println("Usage: task-cli add <description>");
-                    return;
-                }
-                String description = args[1];
-                
-                // Load existing tasks
-                List<Task> tasks = loadTasksFromFile();
-                
-                // Generate new ID
-                int newId = generateId(tasks);
-                
-                // Create and add new task
-                Task newTask = new Task(newId, description);
-                tasks.add(newTask);
-                
-                // Save back to JSON
-                saveTasksToFile(tasks);
-                
-                System.out.println("Task added successfully (ID: " + newId + ")");
-                break;
-                
-            case "list":
-                List<Task> allTasks = loadTasksFromFile();
-                if (allTasks.isEmpty()) {
-                    System.out.println("No tasks found.");
-                } else {
-                    for (Task task : allTasks) {
-                        System.out.println(task);
-                    }
-                }
-                break;
-                
-            default:
-                System.out.println("Unknown command: " + command);
-        }
     }
 
     // FIXED: Changed to FileReader and returns List<Task>
